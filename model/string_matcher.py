@@ -44,10 +44,13 @@ class StringMatcher():
         ## match strings
         dtf_matches = pd.DataFrame(columns=['string','match','similarity'])
         for string in tqdm(lst_left):
-            dtf_match = self.utils_string_matching(string, lst_right, threshold, top)
-            dtf_match = dtf_match.reset_index().rename(columns={'index':'match', string:'similarity'})
-            dtf_match["string"] = string
-            dtf_matches = dtf_matches.append(dtf_match, ignore_index=True, sort=False)
+            try:
+                dtf_match = self.utils_string_matching(string, lst_right, threshold, top)
+                dtf_match = dtf_match.reset_index().rename(columns={'index':'match', string:'similarity'})
+                dtf_match["string"] = string
+                dtf_matches = dtf_matches.append(dtf_match, ignore_index=True, sort=False)
+            except:
+                print(string)
         return dtf_matches[['string','match','similarity']]
     
     
